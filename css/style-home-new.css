@@ -400,7 +400,7 @@ header {
 .advantage aside .icon-box .affordable-price-icon {
     width: 92px;
     height: 92px;
-    background: url(../images/star.webp) -455px 0px no-repeat;
+    background: url(../images/all-icon-new.webp) -455px 0px no-repeat;
     display: block;
     text-align: center;
     margin: 0 auto;
@@ -409,7 +409,7 @@ header {
 .advantage aside:hover .icon-box .affordable-price-icon {
     width: 92px;
     height: 92px;
-    background: url(../images/star.webp) -455px -90px no-repeat;
+    background: url(../images/all-icon-new.webp) -455px -90px no-repeat;
 }
 
 .advantage aside .icon-box .affordable-price-icon1 {
@@ -1270,7 +1270,7 @@ header {
     color: #fff;
     border: 1px solid #fff;
     padding: 10px 15px;
-    margin: 10px 0 0 0;
+    margin: 15px 0 0 0;
 }
 
 .phone-number-box h3 {

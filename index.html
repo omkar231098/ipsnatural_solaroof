@@ -610,47 +610,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <div class="col-md-9 p-0" id="form-top">
                             <div class="hero-form d-flex align-items-center justify-content-center bg-color-primery-d height-100 font-poppins font-w100 hero_box">
 
-                                <form name="myform" action="https://webto.salesforce.com/servlet/servlet.WebToLead" class="d-flex align-items-center" onsubmit="return validateForm()" method="post">
-                                    <input type="hidden" id="encoding" name="encoding" value="UTF-8">
-                                    <input type="hidden" id="oid" name="oid" value="00D90000000kw0v">
-
+                                <form id="myForm" class="d-flex align-items-center" onsubmit="submitToGoogleSheets(event)">
                                     <div class="form-wrap form_main_box">
-
                                         <div class="radio-btn d-flex align-item-center mb-4 mr-3 enquery_box">
                                             <span class="mx-1 fs-22 form-label enquery_text">Enquire Now -</span>
                                             <div class="form_right_box">
                                                 <p class="font-poppins m-0 ml-2"> I'm looking for </p>
                                                 <div class="custom-control custom-radio ml-0 ml-md-4">
-                                                    <input type="radio" class="custom-control-input" id="customRadio" name="00N9000000FSfoi" value="Residential" onclick="ResidentialClick();">
-                                                    <label class="custom-control-label m-0" for="customRadio">Residential</label>
+                                                    <input type="radio" class="custom-control-input" id="residential" name="property_type" value="Residential" checked>
+                                                    <label class="custom-control-label m-0" for="residential">Residential</label>
                                                 </div>
                                                 <div class="custom-control custom-radio ml-0 ml-md-4">
-                                                    <input type="radio" class="custom-control-input" id="customRadio2" name="00N9000000FSfoi" value="" onclick="NonResidentialClick();">
-                                                    <label class="custom-control-label m-0" for="customRadio2">Company/Society/Institution</label>
+                                                    <input type="radio" class="custom-control-input" id="commercial" name="property_type" value="Company/Society/Institution">
+                                                    <label class="custom-control-label m-0" for="commercial">Company/Society/Institution</label>
                                                 </div>
                                             </div>
                                         </div>
-
+                                        
                                         <div class="form-inputs d-flex align-item-center flex-wrap form_box">
-                                            <input type="text" id="last_name" name="last_name" placeholder="Name*" pattern="[a-zA-Z .]{2,}" title="Only Alphabets with space and dot" required onfocusout="chkMandatory()">
-                                            <input type="number" id="mobile" name="mobile" placeholder="10 digit Mobile number*" required onfocusout="chkMandatory()">
-                                            <!-- <input type="email" id="email" name="email" placeholder="Email*" required onfocusout="chkMandatory()"> -->
-                                            <!-- <input type="number" id="FmIMF" name="00N0o00000FmIMF" class="mask" placeholder="Avg Monthly Electricity Bill (Rs)*" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"> -->
-                                            <!-- <input type="number" id="pinno" name="00N0o00000NzkKF" placeholder="6 digit pincode*" pattern="[0-9]{6}" title="Only 6 digits number" required oninput="chkInputPin()"> -->
-                                            <input type="text" id="company" name="company" placeholder="Company/Society Name*" pattern="[a-zA-Z .]{2,}" title="Only Alphabets with space and dot" style="display: none;" oninput="chkInputCom()">
-                                            <input type="hidden" id="00NC6000000Nv70" name="00NC6000000Nv70" value="Rs.">
-                                            <input type="hidden" id="00N9000000FSfod" name="00N9000000FSfod" value="TPS Website ">
-                                            <input type="hidden" id="00N0o00000NzkJl" name="00N0o00000NzkJl" value="Microsite">
-                                            <input type="hidden" id="00N0o00000NgqiZ" name="00N0o00000NgqiZ" value="">
-                                            <input type="hidden" id="retURL" name="retURL" value="https://solaroof.tatapower.com/thank-you.html">
-                                            <input type="hidden" id="recordType" name="recordType" value="01290000001BYI5AAO">
-                                            <input type="hidden" id="00NS2000000X7vZ" name="00NS2000000X7vZ" value="">
-                                            <input type="hidden" id="gclid_field" name="gclid_field" value="">
-                                            <input type="submit" id="subbut" value="Submit Your Interest" class="bg-color-white">
+                                            <input type="text" id="last_name" name="last_name" placeholder="Name*" required>
+                                            <input type="number" id="mobile" name="mobile" placeholder="10-digit Mobile number*" required>
+                                            <input type="text" id="company" name="company" placeholder="Company/Society Name*" style="display: none;">
+                                            <input type="submit" value="Submit Your Interest" class="bg-color-white">
                                         </div>
                                         <span class="agree_text">I agree to the IPS Natural <a href="https://www.tatapowersolar.com/terms-of-use/" target="_blank">Terms of Use </a></span>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
@@ -2011,6 +1995,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         window.addEventListener('load', addGclid);
     </script>
+
+
+
+<script>
+
+function submitToGoogleSheets(event) {
+    event.preventDefault();
+    
+    const form = document.getElementById("myForm");
+    const formData = new FormData(form);
+    
+    fetch('https://script.google.com/macros/s/AKfycbz2-d-74FRdpzGOnUTVY46JTXlxKFcp9V7QbC7Is6OMQVl3_pB7qNJzD7u2yR4D8NYG/exec', {  // Replace with the URL of your Apps Script Web App
+        method: 'POST',
+        body: formData,
+        mode:'no-cors'
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert("Your inquiry has been submitted!");
+        
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("There was an issue submitting your inquiry.");
+    });
+}
+
+</script>
+
+
 
 </body>
 
